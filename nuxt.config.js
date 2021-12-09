@@ -1,3 +1,5 @@
+import vi18nConfig from './vue-i18n-config'
+
 export default {
   server: {
     port: 9090 // default: 3000
@@ -143,12 +145,7 @@ export default {
       { code: 'vt', iso: 'vt', file: 'vt.json' },
     ],
     strategy: 'prefix_except_default',
-    vueI18n: {
-      fallbackLocale: 'en',
-      // hide the warning message from the console.
-      silentTranslationWarn: true
-      // silentFallbackWarn: true,
-    }
+    vueI18n: vi18nConfig
   },
 
   apollo: {
