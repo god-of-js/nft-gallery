@@ -7,7 +7,7 @@
     <p class="faq__box heading is-size-4-mobile is-size-3-tablet text-bold is-flex-inline mb-6">
       No time for reading? <br />
       No problem. Check out <br />
-      <nuxt-link :to="{ name: 'tutorials' }">
+      <nuxt-link :to="{ path: 'tutorials' }">
         Our tutorials.
       </nuxt-link>
     </p>
@@ -18,8 +18,8 @@
           <div class="is-flex is-align-items-center">
             <a
               class="has-text-primary"
-              :href="'#' + qa[0].replace(/ /g, '-')"
             >
+              <!-- :href="'#' + qa[0].replace(/ /g, '-')" -->
               <b-icon :icon="!props.open ? 'chevron-down' : 'chevron-up'" class="mr-4">
               </b-icon>
             </a>
@@ -38,7 +38,6 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'nuxt-property-decorator'
-import i18n from '@/i18n'
 
 @Component({})
 export default class Faq extends Vue {
@@ -49,7 +48,7 @@ export default class Faq extends Vue {
     let i: number
     const qa: any = []
     for (i = 1; i < 24; i++) {
-      qa.push([i18n.t(`faq.q.${i}`), i18n.t(`faq.a.${i}.m`)])
+      qa.push([this.$i18n.t(`faq.q.${i}`), this.$i18n.t(`faq.a.${i}.m`)])
     }
 
     this.faqQuestionsAnswers = qa
