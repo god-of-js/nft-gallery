@@ -1,7 +1,6 @@
 <template>
   <div>
     <Loader v-model="isLoading" :status="status" />
-
     <h2 class="title is-size-3">
       {{ $t('mint.collection.create') }}
     </h2>

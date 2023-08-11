@@ -1,5 +1,9 @@
 <template>
   <section>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque impedit
+    temporibus hic, omnis odit dolore fugit blanditiis soluta alias sequi
+    aspernatur, natus facilis fugiat, quisquam amet possimus voluptates ullam
+    explicabo?
     <NeoTabs v-model="activeTab" expanded>
       <NeoTabItem v-for="x in components" :key="x" :label="x">
         <component
