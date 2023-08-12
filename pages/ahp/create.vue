@@ -1,6 +1,5 @@
 <template>
   <section>
-    <CreateTypePickerCard />
     <NeoTabs v-model="activeTab" expanded>
       <NeoTabItem v-for="x in components" :key="x" :label="x">
         <component
@@ -17,12 +16,9 @@ import { NeoTabItem, NeoTabs } from '@kodadot1/brick'
 
 const Collection = () => import('@/components/stmn/Create/CreateCollection.vue')
 const NFT = () => import('@/components/stmn/Create/CreateToken.vue')
-const CreateTypePickerCard = () =>
-  import('@/components/stmn/Create/CreateTypePickerCard.vue')
 
 const components = {
   Collection,
-  CreateTypePickerCard,
   NFT,
   NeoTabItem,
   NeoTabs,

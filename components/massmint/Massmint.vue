@@ -1,33 +1,19 @@
 <template>
   <div>
     <Loader v-model="isMinting" :status="mintStatus" :can-cancel="false" />
-    <div>
-      <section class="is-flex controls">
-        <NeoButton class="left" @click.native="toOnborading">
-          <NeoIcon icon="arrow-left" class="mr-1" />
-          {{ $t('massmint.backToOnbaording') }}
-        </NeoButton>
-        <div class="dropdown-container">
-          <div>
-            <p class="mb-4">{{ $t('massmint.chooseCollection') }}</p>
-            <ChooseCollectionDropdown
-              @selectedCollection="onCollectionSelected" />
-          </div>
-        </div>
-      </section>
-
-      <section class="border k-shadow mt-7">
-        <UploadMediaZip
-          :disabled="!selectedCollection"
-          @zipLoaded="onMediaZipLoaded" />
-        <UploadDescription
-          :disabled="!mediaLoaded"
-          @fileLoaded="onDescriptionLoaded" />
-        <OverviewTable
-          :disabled="!mediaLoaded"
-          :nfts="NFTS"
-          @openSideBarWith="openSideBarWith"
-          @delete="openDeleteModalWith" />
+    <div class="mass-mint">
+      <h1 class="mass-mint-header">What do you wish to create?</h1>
+      <section class="mt-7 selection-cards">
+        <TypeSelectionCard
+          title="Collection"
+          description="Create a collection for your NFTs ">
+          <ImageCollection />
+        </TypeSelectionCard>
+        <TypeSelectionCard
+          title="NFT"
+          description="Create awesome NFTs from your art">
+          <NftDiamond />
+        </TypeSelectionCard>
       </section>
     </div>
     <EditPanel
@@ -35,21 +21,6 @@
       :open="sideBarOpen"
       @close="sideBarOpen = false"
       @save="updateNFT" />
-    <div class="mt-6 is-flex is-justify-content-center w-full">
-      <NeoButton
-        class="is-flex is-flex-grow-1 limit-width"
-        variant="k-accent"
-        size="large"
-        :disabled="!mediaLoaded"
-        @click.native="openReviewModal">
-        <span class="is-size-5"
-          >{{ $t('massmint.mintNFTs') }}
-          <span v-if="numOfValidNFTs" class="has-text-weight-bold">
-            ({{ numOfValidNFTs }})
-          </span>
-        </span>
-      </NeoButton>
-    </div>
     <DeleteModal
       v-if="nftInDeleteModal"
       v-model="deleteModalOpen"
@@ -80,15 +51,19 @@
 import { NeoButton, NeoIcon } from '@kodadot1/brick'
 import { usePreferencesStore } from '@/stores/preferences'
 import UploadMediaZip from './uploadCompressedMedia/UploadCompressedMedia.vue'
+import NftDiamond from '@/assets/NftDiamond.vue'
+import ImageCollection from '~~/assets/ImageCollection.vue'
 import UploadDescription from './uploadDescription/UploadDescription.vue'
 import OverviewTable from './OverviewTable.vue'
 import ChooseCollectionDropdown from './ChooseCollectionDropdown.vue'
+import TypeSelectionCard from './TypeSelectionCard.vue'
 import EditPanel from './EditPanel.vue'
 import { NFT, NFTToMint } from './types'
 import MissingInfoModal from './modals/MissingInfoModal.vue'
 import ReviewModal from './modals/ReviewModal.vue'
 import DeleteModal from './modals/DeleteModal.vue'
 import MintingModal from './modals/MintingModal.vue'
+
 import { MintedCollection } from '@/composables/transaction/types'
 import { notificationTypes, showNotification } from '@/utils/notification'
 import { useMassMint } from '@/composables/massmint/useMassMint'
@@ -247,13 +222,25 @@ const onDescriptionLoaded = (entries: Record<string, Entry>) => {
 <style lang="scss" scoped>
 @import '@/styles/abstracts/variables.scss';
 
-.controls {
-  justify-content: center;
-  align-items: flex-end;
+.mass-mint {
+  max-width: 600px;
+  margin: auto;
 
-  .left {
-    position: absolute;
-    left: 2.5rem;
+  .mass-mint-header {
+    font-family: Work Sans;
+    font-size: 39px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+  }
+  .selection-cards {
+    display: grid;
+    gap: 24px;
+
+    @media screen and (min-width: 560px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 }
 
