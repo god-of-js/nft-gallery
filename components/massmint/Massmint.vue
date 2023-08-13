@@ -3,18 +3,22 @@
     <Loader v-model="isMinting" :status="mintStatus" :can-cancel="false" />
     <div class="mass-mint">
       <h1 class="mass-mint-header">What do you wish to create?</h1>
-      <section class="mt-7 selection-cards">
+      <div class="mt-7 selection-cards">
         <TypeSelectionCard
           title="Collection"
-          description="Create a collection for your NFTs ">
+          :href="`/${urlPrefix}/create`"
+          description="Create a collection for your NFTs"
+          @select="routeToSelectedCategory">
           <ImageCollection />
         </TypeSelectionCard>
         <TypeSelectionCard
           title="NFT"
+          :href="`/${urlPrefix}/create`"
           description="Create awesome NFTs from your art">
           <NftDiamond />
         </TypeSelectionCard>
-      </section>
+      </div>
+      <div class="experiment-text">Want to experiment? <MagicWand /></div>
     </div>
     <EditPanel
       :nft="nftBeingEdited"
@@ -50,9 +54,11 @@
 <script setup lang="ts">
 import { NeoButton, NeoIcon } from '@kodadot1/brick'
 import { usePreferencesStore } from '@/stores/preferences'
+
 import UploadMediaZip from './uploadCompressedMedia/UploadCompressedMedia.vue'
 import NftDiamond from '@/assets/NftDiamond.vue'
-import ImageCollection from '~~/assets/ImageCollection.vue'
+import ImageCollection from '@/assets/ImageCollection.vue'
+import MagicWand from '@/assets/MagicWand.vue'
 import UploadDescription from './uploadDescription/UploadDescription.vue'
 import OverviewTable from './OverviewTable.vue'
 import ChooseCollectionDropdown from './ChooseCollectionDropdown.vue'
@@ -218,6 +224,10 @@ const onDescriptionLoaded = (entries: Record<string, Entry>) => {
     }
   })
 }
+
+function routeToSelectedCategory(url: string) {
+  router.push(url)
+}
 </script>
 <style lang="scss" scoped>
 @import '@/styles/abstracts/variables.scss';
@@ -225,6 +235,7 @@ const onDescriptionLoaded = (entries: Record<string, Entry>) => {
 .mass-mint {
   max-width: 600px;
   margin: auto;
+  padding-top: 120px;
 
   .mass-mint-header {
     font-family: Work Sans;
@@ -240,6 +251,26 @@ const onDescriptionLoaded = (entries: Record<string, Entry>) => {
 
     @media screen and (min-width: 560px) {
       grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .experiment-text {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+    margin-top: 36px;
+    svg {
+      @include ktheme() {
+        fill: theme('text-color');
+      }
+      width: 30px;
+      height: 30px;
     }
   }
 }
